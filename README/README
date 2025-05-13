@@ -279,3 +279,84 @@ cons you should be very careful while changing,same code is reflecting to PROD a
 [## after this command only one terraform.statetf file automatically created but only one terraform.state.tf files changes to first initing dev state file changes to dev and initing prod state change to prod but state changes when dev enviroment completed initied then only next prod will environment runs
 [b] terraform plan -var-file=DEV/dev.tfvars or terraform plan -var-file=PROD/prods.tfvars
 [C] terraform apply -var-file=DEV/dev.tfvars -auto-approve
+
+## ## ## ## ## ## #  modules in terraform ## ## ## ## ## ## # # # # # ##  #
+[a] you create code, re use it instead of writing same code again and again
+[b] we will create code modules
+[c] whenever you need you can always call modules
+
+##### module topic in terraform ##########
+[a] create one folder terraform-module-ec2 inside this folder create variable.tf file and ece.tf file
+ec2.tf file data is instance creation code and variable.tf file data is instance and instance type code passing
+[b] create one more folder terraform-mainfile inside this folder create mainfile.tf file and provide.tf
+########## mainfile.tf file code we are fetching code from terraform-module-ec2 folder but main folder is terraform-mainfile or anyfolder but we fetching code
+mainfile.tf code 
+module "ec2" {   ## here we are telling to create this server but fetching code from another folder ##
+    source = "../terraform-module-ec2"
+    ami_id = "ami-0f3c7d46464dc46464"
+    instance_type = "t2.micro"
+}  
+####### but in modules we only give argurment like instance type t2.micro ami id #################
+####### create source code and valus and pass argurment to mainfile.tf file  #############
+### value or argurnment both are same meaning ### but modules we call values instread of argurments ###
+
+############ terraform functions ##################
+1. search terraform functions in google and refer more function.
+
+### creating ec2 instance with key pair ############
+1.key pair means private or public address public ip address 
+2. how to create key pair in aws open aws,ec2, select key pair,inside key pair select .pem,RSA createkey
+3. open putty gen and load private key pair and copy text like this 
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC2UN34pXVCJaULqe4Om6E+ioWOpKE26O87db/V5+bWyOYl9GACkHqVbGd811yDCOtyakIoYqYHwNS3usSm9UOys4z+PZ5QvzLkrD9KtoHoXHjYFLw8Tqc3IzY5vALfds9JeSGqaH31S5q3lj2bVmthqpLy6PgWGzs7NeN2BlaAkrhjI0KwkzvaivvCOXnU7IRHS9yrTdTFzL3qoqQUR+3jmT9G+WAXAdpmSSQskYBbqIoyo6MK4iEe8aZzKlkS1/ZZbiuNnKUYDblZBB7AEQhojYdoAAC0k44tXv5RWdf4Km7m2MrjDq7Z
+4.file("${path.module}/keypair") this module plays like variable but this module referring file form keypair, keypair is another file inside the keypair some data is its public key pair
+
+### attaching key pair to ec3 and creating ec2 instance #######
+
+
+######## locals topic in terraform ##########
+1.locals topic in terraform its same like a variable but in locals functions and conditions also accept
+
+##### ami topic #####
+1. in aws console whenever new update comes automaticaly ami id will change 
+2. different regions different ami ids
+
+
+### terraform provides data sources means cloud provides ###
+interview quentions about data source
+[a] data sources are useful to query the information from provides 
+for example, we can get the ami id dienamically from aws instead of taking it from aws console.
+#### using data sources ############
+1. ami_id without taking form aws console using data source systax easliy find ami_ids ##
+2. in ami-d is [3830823] you keep like this [*] it is for safe copy number and press this *
+
+###### inside loops  #######
+1.count and count index we uses for iterate format on list 
+2.for each we uses for map/list format
+### using for each concept creating 10 instances ###
+#[a] for_each when you iterate over a map, it will give us one special variable.
+#[b] go and refer varible.tf file there 
+#[c] for example, MongoDB = t2.micro 
+#[d] MongoDB = each.key and t2.micro = each.value 
+ aws_instance_info = {
+  "ami" = "ami-0b4f379183e5706b9"
+  "arn" = "arn:aws:ec2:us-east-1:168126499043:instance/i-0117b0ecd585ce483"
+  "associate_public_ip_address" = true
+  "availability_zone" = "us-east-1c"
+  "capacity_reservation_specification" = tolist([
+    {
+      "capacity_reservation_preference" = "open"
+      "capacity_reservation_target" = tolist([])
+    }
+#this is map format but
+[a] aws_instance_info only this key
+[b] remaining all data value and inside the value we have key 
+### now we are creating 10 instances using map data type format ###
+
+
+
+
+
+#### this is output of instance this using for main file not variable like that files ####
+##########  output "aws_instance_info" {    #############
+##########      value = aws_instance.roboshop      #########
+#########  }     this is just understanding    purpose     ###########
