@@ -1,0 +1,281 @@
+##### terraform northing but iaac ## iaac northing but infrachiture as a code ###
+1.version control 
+it should be kept in version control,so that we can maintain the history and we can easily revert previous version if latest verison is wrong or error.
+
+2.consistent infra
+[a] manual installing application runs on non production env but 
+[b] consistent infra = same terraform code you run multiple envs.
+
+3.curd 
+using terraform code installing server.
+you can read,write,update,delete, using configaration in terraform playbook like IAAC
+
+4.inventory management
+By using terraform,you can know what are the services,regions and resources you are using for particular project
+[a] for example if in case someone disable write ascess in aws console so we can't crete instances
+that's why, using terraform we can create instances easily.
+
+5.cost optimization
+when we need infra you can create, but when we not required you can delete infra using terraform code   
+
+6.Dependency management
+manual creation instance in aws first creates security group next ec2
+but using teeraform code fisrt ec2 and security group
+
+7.modules
+Re use code in teeraform no need to change code again and again
+
+########################   How to download teeraform   #################################
+1. teeraform download search in google select windowns binary download
+2. after downloaded terrform folder keep a other folder and click exactall
+3. after exacted teeraform folder only teeraform file keep in terraform folder remaining folders delete it  
+4. copy teeraform path in our laptop like this C:\Users\wwwsr\OneDrive\Desktop\download teeraform
+5. our system search enviroment variable click enviroment varibles 
+6.select second option click path, edit, select new and paste C:\Users\wwwsr\OneDrive\Desktop\download teeraform, ok,ok,ok 
+7. open teeraform installed folder and press on terraform and normaly open git bash and enter terraform
+8.after entered teeraform in git bash command not found not installed terraform if teeraform global then installed.
+
+########### envirnment setpu for teeraform #################
+ ### How teerafoem works with aws console ###
+1. vs code to teeraform to aws cli means authentication to aws console
+2.aws cli means authentication 
+3.teeraform checks aws console through anthentication user right or wrong 
+
+######### How to download aws cli #################
+1. open google search aws cli interface and download 64bit
+2.after aws cli installed open system command prompt enter aws --version
+3. again open aws search iam and create user 
+4. IAM user creation process
+[a] create user name is terraform [b] next [c] attach policies directly [d] select administrator access [e] next,creteuser
+[f]click on teeraform [g] select security credentials,click access key,select cli option and understand and next.[h] copy both access key and secret key away or download 
+5. again open system command prompt [a] aws configure [b] give access key and secret key and us-east-1 region
+
+
+### our web ###
+develop provides
+terraform can create resources into our website
+
+### for example roboshop ###
+create users or signup
+you can develop roboshop terraform provider and you can use terraform to create users.
+1.first develop provides
+2. second creates instances
+
+### how to create instances using teeraform ###
+teeraform systax is in hcl language HashiCorp Configuration Language
+
+####### how to create ec2 instance in teeraform ##############
+1.why provider.tf file it means we are informing to teeraform using aws cloud provider
+
+######### how to create instances using terraform #################
+
+resourse "what_resourse" "name to your resource"{
+    inside the arguments/options
+}
+
+########## terraform commands #############
+1.terraform init = this will initialize terraform
+2.terraform plan = teeraform will tell us what are the resources it is going to create 
+3.terraform apply = it will create the resources
+4. terraform destroy means instance terminated
+5.terraform apply -auto-approve  with entering yes
+
+
+####### what is .gitignore teeraform ##########
+1.gitignore means like non necessary files not run on terraform that's why using .gitignore file in terraform 
+
+############## How to see all systaxs in terraform #################
+1. terraform.io,registy,brower providers,aws, documentation,select default terraform
+
+####### after creation ec2 instance using terraform #################
+1.tags is most important easily we can understand which project it is 
+variable "tags"{
+    type = map
+    default = {    ## this is tags for inside the server creation terraform systax 
+        Name = "Mongodb"
+        enviroment = "DEV"
+        Terraform = "True"
+        Project = "Roboshop"
+        Component = "Mongodb"
+    }
+}
+
+####### output concept in terraform [ output or attribute reference both are same meaning ]###########
+1.output concept means using terraform systax we can easily find server pubile ip address or many more
+
+#### condition topic in terraform ## using terraform syntax will be: ##############
+1.expression ? "this will run if true" : "this will run if false" ## : means else 
+2. if mongodb run t3.micro or cart same instance changed to t2.micro
+3. terraform destroy and destroy all instances
+
+######## loop concept in terraform ######## there are 3 types loop concepts ###########
+1. first is count and count index
+2. how to install multiple instances at a time using loop or count [ create new folder countloop ]
+3. index starts with 0
+4 if you want to give name for single or double use inside the server use this systax
+[a] tags = {
+    Name = "cart"  use this for single name or single name to multiple instances for single name    
+}
+
+
+################ terraform functions ########################
+
+1. search terraform functions in google and refer more function.
+
+### creating ec2 instance with key pair ############
+1.key pair means private or public address public ip address 
+2. how to create key pair in aws open aws,ec2, select key pair,inside key pair select .pem,RSA createkey
+3. open putty gen and load private key pair and copy text like this 
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC2UN34pXVCJaULqe4Om6E+ioWOpKE26O87db/V5+bWyOYl9GACkHqVbGd811yDCOtyakIoYqYHwNS3usSm9UOys4z+PZ5QvzLkrD9KtoHoXHjYFLw8Tqc3IzY5vALfds9JeSGqaH31S5q3lj2bVmthqpLy6PgWGzs7NeN2BlaAkrhjI0KwkzvaivvCOXnU7IRHS9yrTdTFzL3qoqQUR+3jmT9G+WAXAdpmSSQskYBbqIoyo6MK4iEe8aZzKlkS1/ZZbiuNnKUYDblZBB7AEQhojYdoAAC0k44tXv5RWdf4Km7m2MrjDq7Z
+4.file("${path.module}/keypair") this module plays like variable but this module referring file form keypair, keypair is another file inside the keypair some data is its public key pair
+
+### attaching key pair to ec3 and creating ec2 instance #######
+
+
+######## locals topic in terraform ##########
+1.locals topic in terraform its same like a variable but in locals functions and conditions also accept
+
+##### ami topic #####
+1. in aws console whenever new update comes automaticaly ami id will change 
+2. different regions different ami ids
+
+
+### terraform provides data sources means cloud provides ###
+interview quentions about data source
+[a] data sources are useful to query the information from provides 
+for example, we can get the ami id dienamically from aws instead of taking it from aws console.
+#### using data sources ############
+1. ami_id without taking form aws console using data source systax easliy find ami_ids ##
+2. in ami-d is [3830823] you keep like this [*] it is for safe copy number and press this *
+
+###### inside loops  #######
+1.count and count index we uses for iterate format on list 
+2.for each we uses for map/list format
+### using for each concept creating 10 instances ###
+#[a] for_each when you iterate over a map, it will give us one special variable.
+#[b] go and refer varible.tf file there 
+#[c] for example, MongoDB = t2.micro 
+#[d] MongoDB = each.key and t2.micro = each.value 
+ 
+ aws_instance_info = {
+  "ami" = "ami-0b4f379183e5706b9"
+  "arn" = "arn:aws:ec2:us-east-1:168126499043:instance/i-0117b0ecd585ce483"
+  "associate_public_ip_address" = true
+  "availability_zone" = "us-east-1c"
+  "capacity_reservation_specification" = tolist([
+    {
+      "capacity_reservation_preference" = "open"
+      "capacity_reservation_target" = tolist([])
+    }
+#this is map format but
+[a] aws_instance_info only this key
+[b] remaining all data value and inside the value we have key 
+### now we are creating 10 instances using map data type format ###
+
+
+
+
+
+#### this is output of instance this using for main file not variable like that files ####
+##########  output "aws_instance_info" {    #############
+##########      value = aws_instance.roboshop      #########
+#########  }     this is just understanding    purpose     ###########
+
+##### Dynamic block & Remote state ######
+
+#                    ############ Dynamic block #################
+1.for example we creating security groups multiple times using same systax in one file ### that's why Dynamic block
+
+######### state and remote state ##########
+1. why state and remote state file, terraform understand how resources we creating that all understand terraform.tfstate file is mondatory to create any resources and data fetching terraform.tfstate file checks
+## state and remote state ###
+1.Declarative scripting that can create resources based on tf.files.
+2.Declartive = terraform reposibility to create resources whenever you write in tf files.
+3.tf files = declarative = ordering
+4.state = terraform has to know what it is created
+5.terraform.tfstate = terraform will see this file to understand then creates resources it created already.
+###
+[a] while executing terraformfile we can't open terraform.tfstate file, terraform.lockinfo file locks the terraform.tfstate file
+interview what is terraform.lockinfo file?
+A. while terraform working on something we can't open terraform.tfstate file with this terraform.lockinfo.
+[b] what is .gitignore file,what files we no need to execute files in terraform.
+
+## state file if we keep in github or folder we have to face some problems ##
+#################################### ece instance ########## state file keeping local ##########issues
+..................................................................................
+########### devops engineer one guy ############### devops engineer two guy #########   
+1. for example this understanding purpose only.
+2. in desktop create two folders [a] devops engineer one guy [b] devops engineer two guy ## open both folder separte with git bash 
+3.git clone url, clone project of terraform we pushed in github with terraform folder with vsc next cd terraform/ git pull,terraform init,terraform plan, terraform apply -auto-approve
+4.both one and two engineers creates same instance using with terraform syntax but one engineer creates original but two engineer guy creates but double this is major issue to keep state file in local
+######## but same terraform syntax keeping central ###############
+5.create s3 bucket in aws console bucket name = roboshop
+6.again create DynamoDB in aws console,table name = roboshop-locking,partition key = LockID and create here we are creating locking in dynamodb
+7. we are information dynamodb we are keeping state file to central
+8. google search = terraform remote state dynamodb
+9. both engineers what folder you opened in git bash, open provider.tf file
+
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+      version = "6.0.0-beta1"
+    }
+  }
+  backend "s3" {        ## means we are existing inside the s3 bucket ##
+    bucket = "roboshop" here s3 created bucket name
+    key = "for_each-demo" means we opened for_each folder in git bash
+    region = "us-east-1"
+    dynamodb_table = "roboshop" means dynamodb_table name 
+  }
+}
+
+provider "aws" {
+  region = "us-east-1"    
+} 
+######## again creates both engineers first creats but two second engineer can't creates because its showing error like this already exists. 
+
+############ tfvars topic in terraform ########################
+### first using variable.tf file and sg.tf file and provider.taf file and instance.tf file creating instances but keeping not state in location but keeping central location ####
+
+
+1.why tfvars means overwriting valus from variables file.
+2.we are over writing values from variable.tf file.
+3.## first create dev folder and prod folder inside the tfvars folder. ##
+4.for example if we want to install 20 instances for diffenent enviroment like dev,prod using tfvars and iaac infrastructure as a code depolying same instances in different enviroments that's why using tfvars 
+5.using same code but differnt envinoments  
+6.using this command like terraform plan -var-file=DEV.tfvars use inti or plan
+7.i do not use this command then use to create this file terraform.tfvars ## this is default name of terraform.tfvars that will load automatically ##
+
+## if your terraform.statstf file means state file in central location ##
+1. for example we want to create DEV related 10 instances and PROD related 10 instances total 20 ##
+2.but using state file in central location dev instances created after creating 10 prod related instances dev instances will be destroy ##
+3.because we kept terraform.statetf file in central location ###
+4. if state is local location here 20 instances creates dev 10 and prod 10
+
+##  
+i want to install same instances with PROD in aws console that's why using tfvars ##
+ PROD.tfvars means agian 10 instances installing in PROD directory in aws console ##
+here we are over writing values ##
+ 
+### same tfvars process here DEV seperate state file and PROD seperate state file ###
+1.we have multiple ways to creats first step
+[a] maintain different repos ## THIS IS IMPORTANT FOR BIG PROJECTS ###
+roboshop-DEV
+roboshop-PROD
+pros or advantage is code is completely different,so that we don't mess with DEV and PROD.
+cons or disadvantage is you need to work on multiple repos,code is duplicated in 2 repos
+[b] same code but different variable and config ### THIS IS IMPORTANT FOR SMALL PROJECTS ##
+pros code is re used
+cons you should be very careful while changing,same code is reflecting to PROD also.
+[c] terraform workspace ## THIS IS NOT IMPORTANT
+
+### using backend.tf file creating two seperate state files inside the tfvars folder ###
+1.HERE DEV 10 and PROD 10 instance creating at a time in aws console using state in central location.
+2 create two s3 buckets and two dynamadb table in aws console for dev one  and prod one
+3.create two backend.tf files inside the dev and prod folders
+4. ## using this commands cd tfvars/ 
+[a] terraform init -reconfigure -backend-config=DEV/backend.tf
+[## after this command only one terraform.statetf file automatically created but only one terraform.state.tf files changes to first initing dev state file changes to dev and initing prod state change to prod but state changes when dev enviroment completed initied then only next prod will environment runs
+[b] terraform plan -var-file=DEV/dev.tfvars or terraform plan -var-file=PROD/prods.tfvars
+[C] terraform apply -var-file=DEV/dev.tfvars -auto-approve
